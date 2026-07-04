@@ -70,7 +70,6 @@ class Artist(db.Model):
 class Show(db.Model):
    __tablename__ = 'Show'
    id = db.Column(db.Integer, primary_key=True)
-   start_time = db.Column(db.DateTime, nullable=False)
    
    #foreign keys and relationships
    venue_id = db.Column(db.Integer, db.ForeignKey('Venue.id'), nullable=False)
@@ -78,9 +77,7 @@ class Show(db.Model):
    artist_id = db.Column(db.Integer, db.ForeignKey('Artist.id'), nullable=False)
    artist_name = db.Column(db.String, db.ForeignKey('Artist.name'), nullable=False)
    artist_image_link = db.Column(db.String(500), db.ForeignKey('Artist.image_link'), nullable=False)
-   
-   venue = db.relationship('Venue',backref=db.backref('shows', lazy=True))
-   artist = db.relationship('Artist',backref=db.backref('shows', lazy=True))
+   start_time = 
    
    
 #----------------------------------------------------------------------------#

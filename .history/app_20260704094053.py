@@ -79,8 +79,6 @@ class Show(db.Model):
    artist_name = db.Column(db.String, db.ForeignKey('Artist.name'), nullable=False)
    artist_image_link = db.Column(db.String(500), db.ForeignKey('Artist.image_link'), nullable=False)
    
-   venue = db.relationship('Venue',backref=db.backref('shows', lazy=True))
-   artist = db.relationship('Artist',backref=db.backref('shows', lazy=True))
    
    
 #----------------------------------------------------------------------------#
