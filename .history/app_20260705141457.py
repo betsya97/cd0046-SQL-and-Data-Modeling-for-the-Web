@@ -22,7 +22,6 @@ moment = Moment(app)
 #app.config.from_object('config')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://aaguilar:@localhost:5432/FyyurApp'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = 'dev' #in order to CRUD
 
 db = SQLAlchemy(app)
 migrate = Migrate(app,db)
@@ -125,8 +124,8 @@ def venues():
   data=[]
   for areas, venues_list in areas.items():
     data.append({
-      "city":venue.city, 
-      "state":venue.state,
+      "city":city, 
+      "state":state,
       "venues": venues_list
     })
   return render_template('pages/venues.html', areas=data);

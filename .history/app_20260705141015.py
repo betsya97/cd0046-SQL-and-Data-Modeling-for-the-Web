@@ -22,7 +22,6 @@ moment = Moment(app)
 #app.config.from_object('config')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://aaguilar:@localhost:5432/FyyurApp'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = 'dev' #in order to CRUD
 
 db = SQLAlchemy(app)
 migrate = Migrate(app,db)
@@ -125,8 +124,8 @@ def venues():
   data=[]
   for areas, venues_list in areas.items():
     data.append({
-      "city":venue.city, 
-      "state":venue.state,
+      "city":city, 
+      "state":state,
       "venues": venues_list
     })
   return render_template('pages/venues.html', areas=data);
@@ -254,26 +253,14 @@ def create_venue_submission():
       address=request.form['address'],
       phone=request.form['phone'],
       #concat the string values into a list
-      genres=",".join(request.form.getlist('genres')),
-      image_link=request.form['image_link'],
-      facebook_link=request.form['facebook_link'],
-      website=request.form['website_link'], 
-      seeking_talent=bool(request.form.get('seeking_talent')),
-      seeking_description=request.form.get('seeking_description')
+      
+      
     )
-    db.session.add(venue)
-    db.session.commit()  
   # on successful db insert, flash success
-    flash(f"Venue {request.form.get('name')} was successfully listed!")
+  flash('Venue ' + request.form['name'] + ' was successfully listed!')
   # TODO: on unsuccessful db insert, flash an error instead.
-  except:
-    db.session.rollback()
-    error=True
-    flash(f"Error occurred. Venue {request.form.get('name')} could not be listed.")
   # e.g., flash('An error occurred. Venue ' + data.name + ' could not be listed.')
   # see: http://flask.pocoo.org/docs/1.0/patterns/flashing/
-  finally:
-    db.session.close()
   return render_template('pages/home.html')
 
 @app.route('/venues/<venue_id>', methods=['DELETE'])
