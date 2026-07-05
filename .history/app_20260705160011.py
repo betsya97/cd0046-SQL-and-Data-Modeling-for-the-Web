@@ -124,10 +124,10 @@ def venues():
     })  
   
   data=[]
-  for area_key, venues_list in areas.items():
+  for areas, venues_list in areas.items():
     data.append({
-      "city":area_key[0], 
-      "state":area_key[1],
+      "city":venue.city, 
+      "state":venue.state,
       "venues": venues_list
     })
   return render_template('pages/venues.html', areas=data);
