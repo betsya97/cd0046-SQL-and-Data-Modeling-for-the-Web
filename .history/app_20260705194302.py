@@ -190,7 +190,7 @@ def show_venue(venue_id):
   data={
     "id": venue.id,
     "name": venue.name,
-    "genres": venue.genres,
+    "genres": venue.genres.split(',') if venue.genres else [],
     "address": venue.address,
     "city": venue.city,
     "state": venue.state,

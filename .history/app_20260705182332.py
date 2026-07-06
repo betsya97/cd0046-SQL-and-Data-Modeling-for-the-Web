@@ -155,42 +155,30 @@ def search_venues():
 def show_venue(venue_id):
   # shows the venue page with the given venue_id
   # TODO: replace with real venue data from the venues table, using venue_id
-  venue = Venue.query.get_or_404(venue_id)
-  
-  #past shows 
-  past_shows = db.session.query(Show).filter(
-    Show.venue_id == venue_id,
-    Show.start_time < datetime.now()
-  ).all() 
+  venues = Venue.query.get_or_404(venue_id)
 
-  #future shows
-  upcoming_shows = db.session.query(Show).filter(
-    Show.venue_id == venue_id,
-    Show.start_time >= datetime.now()
-  ).all()
+    # Get all shows at this venue
+  shows = Show.query.filter_by(venue_id=venue.id).all()
 
-  past_shows_data=[]
-  for show in past_shows:
-    artist=Artist.query.get(show.artist_id)
-    past_shows_data = {
+  past_shows = []
+  upcoming_shows = []
+
+  for show in shows:
+    show_data = {
       "artist_id": show.artist_id,
-      "artist_name": artist.artist.name,
-      "artist_image_link": artist.artist.image_link,
-      "start_time": show.start_time.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+      "artist_name": show.artist.name,
+      "artist_image_link": show.artist.image_link,
+      "start_time": show.start_time.strftime("%Y-%m-%dT%H:%M:%S")
     }
-  upcoming_shows_data=[]
-  for show in upcoming_shows:
-    artist=Artist.query.get(show.artist_id)
-    upcoming_shows_data = {
-      "artist_id": show.artist_id,
-      "artist_name": artist.artist.name,
-      "artist_image_link": artist.artist.image_link,
-      "start_time": show.start_time.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
-    }  
+    if show.start_time < datetime.now():
+      past_shows.append(show_data)
+    else:
+      upcoming_shows.append(show_data)  
+  
   data={
     "id": venue.id,
     "name": venue.name,
-    "genres": venue.genres,
+    "genres": venue.genres.split(',') if venue.genres else [],
     "address": venue.address,
     "city": venue.city,
     "state": venue.state,
@@ -203,7 +191,6 @@ def show_venue(venue_id):
     "upcoming_shows": upcoming_shows,
     "past_shows_count": len(past_shows),
     "upcoming_shows_count": len(upcoming_shows)
-  }
   return render_template('pages/show_venue.html', venue=data)
 
 #  Create Venue

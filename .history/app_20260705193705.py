@@ -155,7 +155,7 @@ def search_venues():
 def show_venue(venue_id):
   # shows the venue page with the given venue_id
   # TODO: replace with real venue data from the venues table, using venue_id
-  venue = Venue.query.get_or_404(venue_id)
+  venues = Venue.query.get_or_404(venue_id)
   
   #past shows 
   past_shows = db.session.query(Show).filter(
@@ -190,7 +190,7 @@ def show_venue(venue_id):
   data={
     "id": venue.id,
     "name": venue.name,
-    "genres": venue.genres,
+    "genres": venue.genres.split(',') if venue.genres else [],
     "address": venue.address,
     "city": venue.city,
     "state": venue.state,
@@ -203,7 +203,6 @@ def show_venue(venue_id):
     "upcoming_shows": upcoming_shows,
     "past_shows_count": len(past_shows),
     "upcoming_shows_count": len(upcoming_shows)
-  }
   return render_template('pages/show_venue.html', venue=data)
 
 #  Create Venue
