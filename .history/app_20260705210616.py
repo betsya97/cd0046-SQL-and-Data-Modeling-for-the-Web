@@ -113,16 +113,10 @@ def venues():
   venues = Venue.query.all()
   areas={}
   for venue in venues:
-    key= (venue.city, venue.state)
+    key=(venue.city, venue.state)
     if key not in areas:
       areas[key] = []
-    
-    #counter for upcoming shows
-    upcoming_shows = Show.query.filter(
-      Show.venue_id == venue.id, 
-      Show.start_time >= datetime.now()
-    ).count()
-    
+    upcoming_shows = Show.query.filter(Show.venue_id == venue.id, Show.start_time > datetime.now()).count()
     areas[key].append({
       "id":venue.id,
       "name":venue.name,
@@ -130,10 +124,10 @@ def venues():
     })  
   
   data=[]
-  for areas, venues_list in areas.items():
+  for area_key, venues_list in areas.items():
     data.append({
-      "city":areas[0], #city 
-      "state":areas[1], #state
+      "city":area_key[0], 
+      "state":area_key[1],
       "venues": venues_list
     })
   return render_template('pages/venues.html', areas=data);
@@ -254,7 +248,7 @@ def create_venue_submission():
     db.session.close()
   return render_template('pages/home.html')
 
-@app.route('/venues/<venue_id>', methods=['DELETE'])
+@app.route('/venues/<int:venue_id>', methods=['DELETE'])
 def delete_venue(venue_id):
   # TODO: Complete this endpoint for taking a venue_id, and using
   # SQLAlchemy ORM to delete a record. Handle cases where the session commit could fail.
@@ -272,7 +266,7 @@ def delete_venue(venue_id):
     return {"error": "Can't delete venue"}, 500
   # BONUS CHALLENGE: Implement a button to delete a Venue on a Venue Page, have it so that
   # clicking that button delete it from the db then redirect the user to the homepage
-  return render_template('pages/home.html') # go back to home after deleting, update show_venue.html for button
+  return redirect(url_for('index')) # go back to home after deleting, update show_venue.html for button
 
 #  Artists
 #  ----------------------------------------------------------------

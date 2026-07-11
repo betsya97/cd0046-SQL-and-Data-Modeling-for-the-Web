@@ -120,7 +120,7 @@ def venues():
     #counter for upcoming shows
     upcoming_shows = Show.query.filter(
       Show.venue_id == venue.id, 
-      Show.start_time >= datetime.now()
+      Show.start_time > datetime.now()
     ).count()
     
     areas[key].append({

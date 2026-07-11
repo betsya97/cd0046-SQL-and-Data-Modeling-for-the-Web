@@ -113,16 +113,10 @@ def venues():
   venues = Venue.query.all()
   areas={}
   for venue in venues:
-    key= (venue.city, venue.state)
+    key=(venue.city, venue.state)
     if key not in areas:
       areas[key] = []
-    
-    #counter for upcoming shows
-    upcoming_shows = Show.query.filter(
-      Show.venue_id == venue.id, 
-      Show.start_time >= datetime.now()
-    ).count()
-    
+    upcoming_shows = Show.query.filter(Show.venue_id == venue.id, Show.start_time > datetime.now()).count()
     areas[key].append({
       "id":venue.id,
       "name":venue.name,
@@ -130,10 +124,10 @@ def venues():
     })  
   
   data=[]
-  for areas, venues_list in areas.items():
+  for area_key, venues_list in areas.items():
     data.append({
-      "city":areas[0], #city 
-      "state":areas[1], #state
+      "city":area_key[0], 
+      "state":area_key[1],
       "venues": venues_list
     })
   return render_template('pages/venues.html', areas=data);
