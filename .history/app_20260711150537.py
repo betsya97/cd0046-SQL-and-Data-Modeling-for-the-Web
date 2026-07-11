@@ -189,12 +189,12 @@ def show_venue(venue_id):
   upcoming_shows_data=[]
   for show in upcoming_shows:
     artist=Artist.query.get(show.artist_id)
-    upcoming_shows_data.append({
+    upcoming_shows_data = {
       "artist_id": show.artist_id,
       "artist_name": artist.artist.name,
       "artist_image_link": artist.artist.image_link,
       "start_time": show.start_time.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
-    })  
+    }  
   data={
     "id": venue.id,
     "name": venue.name,

@@ -13,7 +13,7 @@ from logging import Formatter, FileHandler
 from flask_wtf import Form
 from forms import *
 from flask_migrate import Migrate
-from datetime import datetime #added to bring functionality
+from datetime import datetime
 #----------------------------------------------------------------------------#
 # App Config.
 #----------------------------------------------------------------------------#
@@ -180,21 +180,21 @@ def show_venue(venue_id):
   past_shows_data=[]
   for show in past_shows:
     artist=Artist.query.get(show.artist_id)
-    past_shows_data.append({ #append to create a list
+    past_shows_data = {
       "artist_id": show.artist_id,
       "artist_name": artist.artist.name,
       "artist_image_link": artist.artist.image_link,
       "start_time": show.start_time.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
-    })
+    }
   upcoming_shows_data=[]
   for show in upcoming_shows:
     artist=Artist.query.get(show.artist_id)
-    upcoming_shows_data.append({
+    upcoming_shows_data = {
       "artist_id": show.artist_id,
       "artist_name": artist.artist.name,
       "artist_image_link": artist.artist.image_link,
       "start_time": show.start_time.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
-    })  
+    }  
   data={
     "id": venue.id,
     "name": venue.name,
