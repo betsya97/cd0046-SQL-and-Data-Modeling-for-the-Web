@@ -198,7 +198,7 @@ def show_venue(venue_id):
   data={
     "id": venue.id,
     "name": venue.name,
-    "genres": venue.genres.split(',') if venue.genres else [], 
+    "genres": venue.genres.split(',') if venue.genres else [],
     "address": venue.address,
     "city": venue.city,
     "state": venue.state,
@@ -516,24 +516,12 @@ def create_shows():
 def create_show_submission():
   # called to create new shows in the db, upon submitting new show listing form
   # TODO: insert form data as a new Show record in the db, instead
-  try:
-    show = Show(
-      artist_id = request.form.get('artist_id'),
-      venue_id = request.form.get('venue_id'),
-      artist_id = request.form.get('start_time')
-    )
-    db.session.add(show)
-    db.session.commit()
-    # on successful db insert, flash success
-    flash('Show was successfully listed!')
+
+  # on successful db insert, flash success
+  flash('Show was successfully listed!')
   # TODO: on unsuccessful db insert, flash an error instead.
-  except Exception as e:
-    db.session.rollback()
-    print(e) # e.g., flash('An error occurred. Show could not be listed.')
-    flash('An error occurred. Show could not be listed.')
- 
-  finally: #best practice
-    db.session.close()
+  # e.g., flash('An error occurred. Show could not be listed.')
+  # see: http://flask.pocoo.org/docs/1.0/patterns/flashing/
   return render_template('pages/home.html')
 
 @app.errorhandler(404)
