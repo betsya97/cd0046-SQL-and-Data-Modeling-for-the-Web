@@ -129,12 +129,13 @@ def venues():
       "num_upcoming_shows":upcoming_shows
     })  
   
-  # reference the tuple rather than the dictionary
+  # reference the tuple
+  
   data=[]
-  for (city,state), venues_list in areas.items():
+  for areas, venues_list in areas.items():
     data.append({
       "city": city,
-      "state": state,
+      "state": state, #state
       "venues": venues_list
     })
   return render_template('pages/venues.html', areas=data);

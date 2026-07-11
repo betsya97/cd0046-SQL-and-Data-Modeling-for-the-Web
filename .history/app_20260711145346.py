@@ -129,7 +129,8 @@ def venues():
       "num_upcoming_shows":upcoming_shows
     })  
   
-  # reference the tuple rather than the dictionary
+  # reference the tuple
+  
   data=[]
   for (city,state), venues_list in areas.items():
     data.append({
