@@ -372,7 +372,7 @@ def show_artist(artist_id):
 @app.route('/artists/<int:artist_id>/edit', methods=['GET'])
 def edit_artist(artist_id):
   # TODO: populate form with fields from artist with ID <artist_id>
-  artist = Artist.query.get_or_404(artist_id)
+  artist = Artist.query.get_or_404(artist.id)
   form = ArtistForm(obj=artist)
   form.genres.data = artist.genres.split(',') if artist.genres else []
   
@@ -577,7 +577,7 @@ if not app.debug:
 
 # Default port:
 if __name__ == '__main__':
-    app.run(debug=True) #auto reload page
+    app.run()
 
 # Or specify port manually:
 '''

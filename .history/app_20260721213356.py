@@ -577,7 +577,7 @@ if not app.debug:
 
 # Default port:
 if __name__ == '__main__':
-    app.run(debug=True) #auto reload page
+    app.run()
 
 # Or specify port manually:
 '''

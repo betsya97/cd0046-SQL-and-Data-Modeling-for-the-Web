@@ -25,3 +25,12 @@ Traceback (most recent call last):
 NameError: name 'data' is not defined
 2026-07-18 14:41:39,192 INFO: errors [in /Users/aaguilar/Documents/Backend Learning/cd0046-SQL-and-Data-Modeling-for-the-Web/app.py:537]
 2026-07-21 21:08:31,802 INFO: errors [in /Users/aaguilar/Documents/Backend Learning/cd0046-SQL-and-Data-Modeling-for-the-Web/app.py:550]
+2026-07-21 21:25:20,507 INFO: errors [in /Users/aaguilar/Documents/Backend Learning/cd0046-SQL-and-Data-Modeling-for-the-Web/./app.py:574]
+2026-07-21 21:25:46,735 INFO: errors [in /Users/aaguilar/Documents/Backend Learning/cd0046-SQL-and-Data-Modeling-for-the-Web/app.py:574]
+2026-07-21 21:29:43,331 INFO: errors [in /Users/aaguilar/Documents/Backend Learning/cd0046-SQL-and-Data-Modeling-for-the-Web/app.py:573]
+2026-07-21 21:33:45,393 INFO: errors [in /Users/aaguilar/Documents/Backend Learning/cd0046-SQL-and-Data-Modeling-for-the-Web/app.py:572]
+2026-07-21 21:36:10,765 INFO: errors [in /Users/aaguilar/Documents/Backend Learning/cd0046-SQL-and-Data-Modeling-for-the-Web/app.py:572]
+2026-07-21 21:46:12,145 INFO: errors [in /Users/aaguilar/Documents/Backend Learning/cd0046-SQL-and-Data-Modeling-for-the-Web/app.py:572]
+2026-07-21 21:53:25,898 INFO: errors [in /Users/aaguilar/Documents/Backend Learning/cd0046-SQL-and-Data-Modeling-for-the-Web/app.py:572]
+2026-07-21 21:53:26,151 INFO: errors [in /Users/aaguilar/Documents/Backend Learning/cd0046-SQL-and-Data-Modeling-for-the-Web/app.py:572]
+2026-07-21 21:55:11,429 INFO: errors [in /Users/aaguilar/Documents/Backend Learning/cd0046-SQL-and-Data-Modeling-for-the-Web/app.py:572]

@@ -372,7 +372,7 @@ def show_artist(artist_id):
 @app.route('/artists/<int:artist_id>/edit', methods=['GET'])
 def edit_artist(artist_id):
   # TODO: populate form with fields from artist with ID <artist_id>
-  artist = Artist.query.get_or_404(artist_id)
+  artist = Artist.query.get_or_404(artist.id)
   form = ArtistForm(obj=artist)
   form.genres.data = artist.genres.split(',') if artist.genres else []
   
@@ -388,20 +388,21 @@ def edit_artist_submission(artist_id):
       name=request.form['name'],
       city=request.form['city'],
       state=request.form['state'],
+      address=request.form['address'],
       phone=request.form['phone'],
       genres=",".join(request.form.getlist('genres')),
       image_link=request.form['image_link'],
       facebook_link=request.form['facebook_link'],
       website=request.form['website_link'], 
-      seeking_venue=bool(request.form.get('seeking_venue')),
+      seeking_talent=bool(request.form.get('seeking_venue')),
       seeking_description=request.form.get('seeking_description')
     )
     db.session.commit()  
-    flash(f"Artist {request.form.get('name')} was successfully updated!")
+    flash(f"Venue {request.form.get('name')} was successfully updated!")
   except:
     db.session.rollback()
     error=True
-    flash(f"Error occurred. Artist {request.form.get('name')} could not be updated.")
+    flash(f"Error occurred. Venue {request.form.get('name')} could not be updated.")
     
   finally:
     db.session.close()
@@ -577,7 +578,7 @@ if not app.debug:
 
 # Default port:
 if __name__ == '__main__':
-    app.run(debug=True) #auto reload page
+    app.run()
 
 # Or specify port manually:
 '''

@@ -576,12 +576,11 @@ if not app.debug:
 #----------------------------------------------------------------------------#
 
 # Default port:
-if __name__ == '__main__':
-    app.run(debug=True) #auto reload page
+# if __name__ == '__main__':
+#     app.run()
 
 # Or specify port manually:
-'''
+
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
+    port = int(os.environ.get('PORT', 5001))
     app.run(host='0.0.0.0', port=port)
-'''
