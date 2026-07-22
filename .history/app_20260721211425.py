@@ -464,8 +464,8 @@ def create_artist_submission():
     )
     db.session.add(artist)
     db.session.commit()  
-    # on successful db insert, flash success
-    flash('Artist ' + request.form['name'] + ' was successfully listed!')
+  # on successful db insert, flash success
+  flash('Artist ' + request.form['name'] + ' was successfully listed!')
   # TODO: on unsuccessful db insert, flash an error instead.
   # e.g., flash('An error occurred. Artist ' + data.name + ' could not be listed.')
   except Exception as e:

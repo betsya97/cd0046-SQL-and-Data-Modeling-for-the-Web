@@ -24,3 +24,4 @@ Traceback (most recent call last):
   File "/Users/aaguilar/Documents/Backend Learning/cd0046-SQL-and-Data-Modeling-for-the-Web/app.py", line 290, in artists
 NameError: name 'data' is not defined
 2026-07-18 14:41:39,192 INFO: errors [in /Users/aaguilar/Documents/Backend Learning/cd0046-SQL-and-Data-Modeling-for-the-Web/app.py:537]
+2026-07-21 21:08:31,802 INFO: errors [in /Users/aaguilar/Documents/Backend Learning/cd0046-SQL-and-Data-Modeling-for-the-Web/app.py:550]
