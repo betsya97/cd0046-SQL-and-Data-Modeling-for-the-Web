@@ -34,3 +34,8 @@ NameError: name 'data' is not defined
 2026-07-21 21:53:25,898 INFO: errors [in /Users/aaguilar/Documents/Backend Learning/cd0046-SQL-and-Data-Modeling-for-the-Web/app.py:572]
 2026-07-21 21:53:26,151 INFO: errors [in /Users/aaguilar/Documents/Backend Learning/cd0046-SQL-and-Data-Modeling-for-the-Web/app.py:572]
 2026-07-21 21:55:11,429 INFO: errors [in /Users/aaguilar/Documents/Backend Learning/cd0046-SQL-and-Data-Modeling-for-the-Web/app.py:572]
+2026-07-21 21:56:20,291 INFO: errors [in /Users/aaguilar/Documents/Backend Learning/cd0046-SQL-and-Data-Modeling-for-the-Web/app.py:572]
+2026-07-21 21:56:20,555 INFO: errors [in /Users/aaguilar/Documents/Backend Learning/cd0046-SQL-and-Data-Modeling-for-the-Web/app.py:572]
+2026-07-21 21:57:51,273 INFO: errors [in /Users/aaguilar/Documents/Backend Learning/cd0046-SQL-and-Data-Modeling-for-the-Web/app.py:576]
+2026-07-21 21:57:57,749 INFO: errors [in /Users/aaguilar/Documents/Backend Learning/cd0046-SQL-and-Data-Modeling-for-the-Web/app.py:576]
+2026-07-21 21:58:19,635 INFO: errors [in /Users/aaguilar/Documents/Backend Learning/cd0046-SQL-and-Data-Modeling-for-the-Web/app.py:560]
