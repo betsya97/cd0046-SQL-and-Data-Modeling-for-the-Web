@@ -26,13 +26,15 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://aaguilar:@localhost:5432/F
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'dev' #in order to CRUD
 
-#db = SQLAlchemy(app)
-db.init_app(app)              # <-- bind database models to this app
+db = SQLAlchemy(app)
 migrate = Migrate(app,db)
 
 #----------------------------------------------------------------------------#
-# Models. (see models.py)
+# Models.
 #----------------------------------------------------------------------------#
+
+
+   
    
 #----------------------------------------------------------------------------#
 # Filters.
@@ -376,9 +378,7 @@ def edit_venue_submission(venue_id):
   try:
     venue.name=request.form['name']
     venue.city=request.form['city']
-    venue.state=request.form['state']
-    venue.address=request.form['address']
-    venue.phone=request.form['phone']
+    venue.state=request.form['state'],venue.address=request.form['address'],venue.phone=request.form['phone']
       #concat the string values into a list
     venue.genres=",".join(request.form.getlist('genres'))
     venue.image_link=request.form['image_link']

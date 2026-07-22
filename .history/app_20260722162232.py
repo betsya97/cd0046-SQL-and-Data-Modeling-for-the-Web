@@ -14,7 +14,6 @@ from flask_wtf import Form
 from forms import *
 from flask_migrate import Migrate
 from datetime import datetime #added to bring functionality
-from models import db, Venue, Artist, Show # import models / datatables
 #----------------------------------------------------------------------------#
 # App Config.
 #----------------------------------------------------------------------------#
@@ -26,13 +25,61 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://aaguilar:@localhost:5432/F
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'dev' #in order to CRUD
 
-#db = SQLAlchemy(app)
-db.init_app(app)              # <-- bind database models to this app
+db = SQLAlchemy(app)
 migrate = Migrate(app,db)
 
 #----------------------------------------------------------------------------#
-# Models. (see models.py)
+# Models.
 #----------------------------------------------------------------------------#
+
+class Venue(db.Model):
+    __tablename__ = 'Venue'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    city = db.Column(db.String(120))
+    state = db.Column(db.String(120))
+    address = db.Column(db.String(120))
+    phone = db.Column(db.String(120))
+    image_link = db.Column(db.String(500))
+    facebook_link = db.Column(db.String(120))
+
+    # missing fields & relationships for Venue:
+    genres = db.Column(db.String(120))
+    website = db.Column(db.String(500))
+    seeking_talent = db.Column(db.Boolean,default=False)
+    seeking_description = db.Column(db.String(500))
+class Artist(db.Model):
+  __tablename__ = 'Artist'
+
+  id = db.Column(db.Integer, primary_key=True)
+  name = db.Column(db.String)
+  city = db.Column(db.String(120))
+  state = db.Column(db.String(120))
+  phone = db.Column(db.String(120))
+  genres = db.Column(db.String(120))
+  image_link = db.Column(db.String(500))
+  facebook_link = db.Column(db.String(120))
+
+    #missing fields & relationships for Artist
+  website = db.Column(db.String(500))
+  seeking_venue = db.Column(db.Boolean,default=False)
+  seeking_description = db.Column(db.String(500))
+    
+
+# TODO Implement Show and Artist models, and complete all model relationships and properties, as a database migration.
+class Show(db.Model):
+   __tablename__ = 'Show'
+   id = db.Column(db.Integer, primary_key=True)
+   start_time = db.Column(db.DateTime, nullable=False)
+   
+   #foreign keys and relationships
+   venue_id = db.Column(db.Integer, db.ForeignKey('Venue.id'), nullable=False)
+   artist_id = db.Column(db.Integer, db.ForeignKey('Artist.id'), nullable=False)
+   
+   venue = db.relationship('Venue',backref=db.backref('shows', lazy=True))
+   artist = db.relationship('Artist',backref=db.backref('shows', lazy=True))
+   
    
 #----------------------------------------------------------------------------#
 # Filters.
@@ -376,9 +423,7 @@ def edit_venue_submission(venue_id):
   try:
     venue.name=request.form['name']
     venue.city=request.form['city']
-    venue.state=request.form['state']
-    venue.address=request.form['address']
-    venue.phone=request.form['phone']
+    venue.state=request.form['state'],venue.address=request.form['address'],venue.phone=request.form['phone']
       #concat the string values into a list
     venue.genres=",".join(request.form.getlist('genres'))
     venue.image_link=request.form['image_link']
