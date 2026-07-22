@@ -421,23 +421,27 @@ def edit_venue_submission(venue_id):
   # venue record with ID <venue_id> using the new attributes
   venue = Venue.query.get_or_404(venue_id)
   try:
-    venue.name=request.form['name'],
-    venue.city=request.form['city'],
-    venue.state=request.form['state'],venue.address=request.form['address'],venue.phone=request.form['phone'],
+    venue = Venue(
+      name=request.form['name'],
+      city=request.form['city'],
+      state=request.form['state'],
+      address=request.form['address'],
+      phone=request.form['phone'],
       #concat the string values into a list
-    venue.genres=",".join(request.form.getlist('genres')),
-    venue.image_link=request.form['image_link'],
-    venue.facebook_link=request.form['facebook_link'],
-    venue.website=request.form['website_link'], 
-    venue.seeking_talent=bool(request.form.get('seeking_talent')),
-    venue.seeking_description=request.form.get('seeking_description')
+      genres=",".join(request.form.getlist('genres')),
+      image_link=request.form['image_link'],
+      facebook_link=request.form['facebook_link'],
+      website=request.form['website_link'], 
+      seeking_talent=bool(request.form.get('seeking_talent')),
+      seeking_description=request.form.get('seeking_description')
+    )
    
     db.session.commit()  
-    flash(f"Venue {venue.name} was successfully updated!")
-  except Exception as e:
+    flash(f"Venue {request.form.get('name')} was successfully updated!")
+  except:
     db.session.rollback()
     error=True
-    flash(f"Error occurred. Venue {venue.name} could not be updated.")
+    flash(f"Error occurred. Venue {request.form.get('name')} could not be updated.")
   finally:
     db.session.close()
   return redirect(url_for('show_venue', venue_id=venue_id))
@@ -490,26 +494,46 @@ def create_artist_submission():
 #  Shows
 #  ----------------------------------------------------------------
 
-
 @app.route('/shows')
 def shows():
   # displays list of shows at /shows
   # TODO: replace with real venues data.
-  
-  shows = Show.query.all()
-  data=[]
-  for show in shows:
-    venue = Venue.query.get(show.venue_id) #match venue model to id tied in show model relationship
-    artist = Artist.query.get(show.artist_id)
-    data.append({
-      "venue_id":show.venue_id, #from relationship in Show model
-      "venue_name":venue.name, #from venue model
-      "artist_id":show.artist_id, #from relationship in Show model
-      "artist_name":artist.name, #from artist model
-      "artist_image_link": artist.image_link,
-      "start_time": show.start_time.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
-    })
-  
+  data=[{
+    "venue_id": 1,
+    "venue_name": "The Musical Hop",
+    "artist_id": 4,
+    "artist_name": "Guns N Petals",
+    "artist_image_link": "https://images.unsplash.com/photo-1549213783-8284d0336c4f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
+    "start_time": "2019-05-21T21:30:00.000Z"
+  }, {
+    "venue_id": 3,
+    "venue_name": "Park Square Live Music & Coffee",
+    "artist_id": 5,
+    "artist_name": "Matt Quevedo",
+    "artist_image_link": "https://images.unsplash.com/photo-1495223153807-b916f75de8c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80",
+    "start_time": "2019-06-15T23:00:00.000Z"
+  }, {
+    "venue_id": 3,
+    "venue_name": "Park Square Live Music & Coffee",
+    "artist_id": 6,
+    "artist_name": "The Wild Sax Band",
+    "artist_image_link": "https://images.unsplash.com/photo-1558369981-f9ca78462e61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=794&q=80",
+    "start_time": "2035-04-01T20:00:00.000Z"
+  }, {
+    "venue_id": 3,
+    "venue_name": "Park Square Live Music & Coffee",
+    "artist_id": 6,
+    "artist_name": "The Wild Sax Band",
+    "artist_image_link": "https://images.unsplash.com/photo-1558369981-f9ca78462e61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=794&q=80",
+    "start_time": "2035-04-08T20:00:00.000Z"
+  }, {
+    "venue_id": 3,
+    "venue_name": "Park Square Live Music & Coffee",
+    "artist_id": 6,
+    "artist_name": "The Wild Sax Band",
+    "artist_image_link": "https://images.unsplash.com/photo-1558369981-f9ca78462e61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=794&q=80",
+    "start_time": "2035-04-15T20:00:00.000Z"
+  }]
   return render_template('pages/shows.html', shows=data)
 
 @app.route('/shows/create')
