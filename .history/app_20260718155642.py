@@ -382,27 +382,30 @@ def edit_artist(artist_id):
 def edit_artist_submission(artist_id):
   # TODO: take values from the form submitted, and update existing
   # artist record with ID <artist_id> using the new attributes
-  artist = Artist.query.get_or_404(artist_id)
   try:
-    artist = Artist(
+    venue = Venue(
       name=request.form['name'],
       city=request.form['city'],
       state=request.form['state'],
       address=request.form['address'],
       phone=request.form['phone'],
+      #concat the string values into a list
       genres=",".join(request.form.getlist('genres')),
       image_link=request.form['image_link'],
       facebook_link=request.form['facebook_link'],
       website=request.form['website_link'], 
-      seeking_talent=bool(request.form.get('seeking_venue')),
+      seeking_talent=bool(request.form.get('seeking_talent')),
       seeking_description=request.form.get('seeking_description')
     )
+    db.session.add(venue)
     db.session.commit()  
-    flash(f"Venue {request.form.get('name')} was successfully updated!")
+  # on successful db insert, flash success
+    flash(f"Venue {request.form.get('name')} was successfully listed!")
+  # TODO: on unsuccessful db insert, flash an error instead.
   except:
     db.session.rollback()
     error=True
-    flash(f"Error occurred. Venue {request.form.get('name')} could not be updated.")
+    flash(f"Error occurred. Venue {request.form.get('name')} could not be listed.")
     
   finally:
     db.session.close()

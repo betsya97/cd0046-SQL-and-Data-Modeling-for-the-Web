@@ -7,3 +7,20 @@
 2026-07-11 13:40:41,838 INFO: errors [in /Users/aaguilar/Documents/Backend Learning/cd0046-SQL-and-Data-Modeling-for-the-Web/app.py:536]
 2026-07-11 14:54:41,146 INFO: errors [in /Users/aaguilar/Documents/Backend Learning/cd0046-SQL-and-Data-Modeling-for-the-Web/app.py:544]
 2026-07-11 15:38:30,826 INFO: errors [in /Users/aaguilar/Documents/Backend Learning/cd0046-SQL-and-Data-Modeling-for-the-Web/app.py:544]
+2026-07-11 15:56:41,165 INFO: errors [in /Users/aaguilar/Documents/Backend Learning/cd0046-SQL-and-Data-Modeling-for-the-Web/app.py:556]
+2026-07-17 14:54:10,183 INFO: errors [in /Users/aaguilar/Documents/Backend Learning/cd0046-SQL-and-Data-Modeling-for-the-Web/app.py:556]
+2026-07-18 12:12:23,529 INFO: errors [in /Users/aaguilar/Documents/Backend Learning/cd0046-SQL-and-Data-Modeling-for-the-Web/app.py:552]
+2026-07-18 12:31:15,429 INFO: errors [in /Users/aaguilar/Documents/Backend Learning/cd0046-SQL-and-Data-Modeling-for-the-Web/app.py:552]
+2026-07-18 13:06:16,246 ERROR: Exception on /artists [GET] [in /Users/aaguilar/Documents/Backend Learning/cd0046-SQL-and-Data-Modeling-for-the-Web/venv/lib/python3.9/site-packages/flask/app.py:1457]
+Traceback (most recent call last):
+  File "/Users/aaguilar/Documents/Backend Learning/cd0046-SQL-and-Data-Modeling-for-the-Web/venv/lib/python3.9/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/aaguilar/Documents/Backend Learning/cd0046-SQL-and-Data-Modeling-for-the-Web/venv/lib/python3.9/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/aaguilar/Documents/Backend Learning/cd0046-SQL-and-Data-Modeling-for-the-Web/venv/lib/python3.9/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/aaguilar/Documents/Backend Learning/cd0046-SQL-and-Data-Modeling-for-the-Web/venv/lib/python3.9/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/Users/aaguilar/Documents/Backend Learning/cd0046-SQL-and-Data-Modeling-for-the-Web/app.py", line 290, in artists
+NameError: name 'data' is not defined
+2026-07-18 14:41:39,192 INFO: errors [in /Users/aaguilar/Documents/Backend Learning/cd0046-SQL-and-Data-Modeling-for-the-Web/app.py:537]

@@ -375,37 +375,13 @@ def edit_artist(artist_id):
   artist = Artist.query.get_or_404(artist.id)
   form = ArtistForm(obj=artist)
   form.genres.data = artist.genres.split(',') if artist.genres else []
-  
   return render_template('forms/edit_artist.html', form=form, artist=artist)
 
 @app.route('/artists/<int:artist_id>/edit', methods=['POST'])
 def edit_artist_submission(artist_id):
   # TODO: take values from the form submitted, and update existing
   # artist record with ID <artist_id> using the new attributes
-  artist = Artist.query.get_or_404(artist_id)
-  try:
-    artist = Artist(
-      name=request.form['name'],
-      city=request.form['city'],
-      state=request.form['state'],
-      address=request.form['address'],
-      phone=request.form['phone'],
-      genres=",".join(request.form.getlist('genres')),
-      image_link=request.form['image_link'],
-      facebook_link=request.form['facebook_link'],
-      website=request.form['website_link'], 
-      seeking_talent=bool(request.form.get('seeking_venue')),
-      seeking_description=request.form.get('seeking_description')
-    )
-    db.session.commit()  
-    flash(f"Venue {request.form.get('name')} was successfully updated!")
-  except:
-    db.session.rollback()
-    error=True
-    flash(f"Error occurred. Venue {request.form.get('name')} could not be updated.")
-    
-  finally:
-    db.session.close()
+
   return redirect(url_for('show_artist', artist_id=artist_id))
 
 @app.route('/venues/<int:venue_id>/edit', methods=['GET'])
