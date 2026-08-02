@@ -489,8 +489,8 @@ def create_show_submission():
     start_time=request.form.get('start_time', '').strip()
     
     show = Show(
-      artist_id = int(artist_id),
-      venue_id = int(venue_id),
+      artist_id = request.form.get('artist_id')
+      venue_id = request.form.get('venue_id'),
       start_time=datetime.strptime(request.form.get('start_time'), '%Y-%m-%d %H:%M:%S')
     )
     db.session.add(show)
