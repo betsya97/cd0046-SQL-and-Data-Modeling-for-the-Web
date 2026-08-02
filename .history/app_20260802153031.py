@@ -271,26 +271,24 @@ def show_artist(artist_id):
   # TODO: replace with real artist data from the artist table, using artist_id
   
   artist = Artist.query.get_or_404(artist_id)
-  
-  #join query to join show to Venue to get past show data and venue data in one single query 
+   
   past_shows = db.session.query(Show, Venue).join(
-    Venue, Show.venue_id == Venue.id
+    Show.venue_id == Venue.id
   ).filter(
-    Show.artist_id == artist_id,
+    Show.artist_id == artist_id
     Show.start_time < datetime.now()
   ).all() 
 
   #future shows
-  upcoming_shows = db.session.query(Show, Venue).join(
-      Venue, Show.venue_id == Venue.id
-    ).filter(
-      Show.artist_id == artist_id,
-      Show.start_time >= datetime.now()
-    ).all()
+  upcoming_shows = db.session.query(Show).filter(
+    Show.artist_id == artist_id,
+    Show.start_time >= datetime.now()
+  ).all()
 
   past_shows_data=[]
-  for show, venue in past_shows:
+  for show in past_shows:
     #access venue data
+    venue=Venue.query.get(show.venue_id)
     past_shows_data.append({ #append to create a list
       "venue_id": show.venue_id,
       "venue_name": venue.name,
@@ -298,7 +296,8 @@ def show_artist(artist_id):
       "start_time": show.start_time.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
     })
   upcoming_shows_data=[]
-  for show, venue in upcoming_shows:
+  for show in upcoming_shows:
+    venue=Venue.query.get(show.venue_id)
     upcoming_shows_data.append({
       "venue_id": show.venue_id,
       "venue_name": venue.name,

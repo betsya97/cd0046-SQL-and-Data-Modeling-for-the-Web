@@ -274,7 +274,7 @@ def show_artist(artist_id):
   
   #join query to join show to Venue to get past show data and venue data in one single query 
   past_shows = db.session.query(Show, Venue).join(
-    Venue, Show.venue_id == Venue.id
+    Show.venue_id == Venue.id
   ).filter(
     Show.artist_id == artist_id,
     Show.start_time < datetime.now()
@@ -282,7 +282,7 @@ def show_artist(artist_id):
 
   #future shows
   upcoming_shows = db.session.query(Show, Venue).join(
-      Venue, Show.venue_id == Venue.id
+      Show.venue_id == Venue.id
     ).filter(
       Show.artist_id == artist_id,
       Show.start_time >= datetime.now()
