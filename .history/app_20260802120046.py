@@ -136,8 +136,9 @@ def show_venue(venue_id):
         ).all()
 
   past_shows_data=[]
-  for show, artist in past_shows:
+  for show in past_shows:
     #access artist data
+    artist = Artist.query.get(show.artist_id)
     past_shows_data.append({ #append to create a list
       "artist_id": show.artist_id,
       "artist_name": artist.name,
@@ -145,7 +146,8 @@ def show_venue(venue_id):
       "start_time": show.start_time.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
     })
   upcoming_shows_data=[]
-  for show, artist in upcoming_shows:
+  for show in upcoming_shows:
+    artist=Artist.query.get(show.artist_id)
     upcoming_shows_data.append({
       "artist_id": show.artist_id,
       "artist_name": artist.name,
