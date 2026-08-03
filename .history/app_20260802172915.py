@@ -393,23 +393,23 @@ def edit_venue_submission(venue_id):
     return render_template('forms/edit_venue.html', form=form, venue=venue)
   
   try:
-    venue.name=form.name.data
-    venue.city=form.city.data
-    venue.state=form.state.data
-    venue.address=form.address.data
-    venue.phone=form.phone.data
-    venue.genres=",".join(form.genres.data)
-    venue.image_link=form.image_link.data
-    venue.facebook_link=form.facebook_link.data
-    venue.website=form.website_link.data
-    venue.seeking_talent=form.seeking_talent.data
-    venue.seeking_description=form.seeking_description.data    
+    name=form.name.data,
+    city=form.city.data,
+    state=form.state.data,
+    address=form.address.data,
+    phone=form.phone.data,
+    genres=",".join(form.genres.data),
+    image_link=form.image_link.data,
+    facebook_link=form.facebook_link.data,
+    website=form.website_link.data,
+    seeking_talent=form.seeking_talent.data,
+    seeking_description=form.seeking_description.data    
    
     db.session.commit()  
     flash(f"Venue {venue.name} was successfully updated!")
   except Exception as e:
     db.session.rollback()
-    print(e)
+    error=True
     flash(f"Error occurred. Venue {venue.name} could not be updated.")
   finally:
     db.session.close()

@@ -386,30 +386,25 @@ def edit_venue_submission(venue_id):
   # TODO: take values from the form submitted, and update existing
   # venue record with ID <venue_id> using the new attributes
   venue = Venue.query.get_or_404(venue_id)
-  form = VenueForm(request.form)
-  
-  if not form.validate_on_submit():
-    flash('Please fix the errors in the form.')
-    return render_template('forms/edit_venue.html', form=form, venue=venue)
-  
   try:
-    venue.name=form.name.data
-    venue.city=form.city.data
-    venue.state=form.state.data
-    venue.address=form.address.data
-    venue.phone=form.phone.data
-    venue.genres=",".join(form.genres.data)
-    venue.image_link=form.image_link.data
-    venue.facebook_link=form.facebook_link.data
-    venue.website=form.website_link.data
-    venue.seeking_talent=form.seeking_talent.data
-    venue.seeking_description=form.seeking_description.data    
+    venue.name=request.form['name']
+    venue.city=request.form['city']
+    venue.state=request.form['state']
+    venue.address=request.form['address']
+    venue.phone=request.form['phone']
+      #concat the string values into a list
+    venue.genres=",".join(request.form.getlist('genres'))
+    venue.image_link=request.form['image_link']
+    venue.facebook_link=request.form['facebook_link']
+    venue.website=request.form['website_link']
+    venue.seeking_talent=bool(request.form.get('seeking_talent'))
+    venue.seeking_description=request.form.get('seeking_description')
    
     db.session.commit()  
     flash(f"Venue {venue.name} was successfully updated!")
   except Exception as e:
     db.session.rollback()
-    print(e)
+    error=True
     flash(f"Error occurred. Venue {venue.name} could not be updated.")
   finally:
     db.session.close()
@@ -438,28 +433,28 @@ def create_artist_submission():
   
   try:
     artist = Artist(
-      name=form.name.data,
-      city=form.city.data,
-      state=form.state.data,
-      phone=form.phone.data,      
+      name=request.form['name'],
+      city=request.form['city'],
+      state=request.form['state'],
+      phone=request.form['phone'],
       #concat the string values into a list like in create_venue_submission
-      genres=",".join(form.genres.data),
-      image_link=form.image_link.data,
-      facebook_link=form.facebook_link.data,
-      website=form.website_link.data,
-      seeking_venue=form.seeking_venue.data,
-      seeking_description=form.seeking_description.data      
+      genres=",".join(request.form.getlist('genres')),
+      image_link=request.form['image_link'],
+      facebook_link=request.form['facebook_link'],
+      website=request.form['website_link'], 
+      seeking_venue=bool(request.form.get('seeking_venue')),
+      seeking_description=request.form.get('seeking_description')
     )
     db.session.add(artist)
     db.session.commit()  
     # on successful db insert, flash success
-    flash(f"Artist {form.name.data} was successfully listed!")
+    flash('Artist ' + request.form['name'] + ' was successfully listed!')
   # TODO: on unsuccessful db insert, flash an error instead.
   # e.g., flash('An error occurred. Artist ' + data.name + ' could not be listed.')
   except Exception as e:
     db.session.rollback()
     print(e)
-    flash(f"Error occurred. Artist {form.name.data} could not be listed.")
+    flash(f"Error occurred. Artist {request.form.get('name')} could not be listed.")
   
   finally:
     db.session.close()
