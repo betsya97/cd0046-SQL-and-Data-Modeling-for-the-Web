@@ -342,7 +342,6 @@ def edit_artist(artist_id):
   artist = Artist.query.get_or_404(artist_id)
   form = ArtistForm(obj=artist)
   form.genres.data = artist.genres.split(',') if artist.genres else []
-  form.website_link.data = artist.website
   
   return render_template('forms/edit_artist.html', form=form, artist=artist)
 
@@ -352,29 +351,28 @@ def edit_artist_submission(artist_id):
   # artist record with ID <artist_id> using the new attributes
   artist = Artist.query.get_or_404(artist_id)
   form = ArtistForm(request.form)
-  
   if not form.validate_on_submit():
     flash('Please fix the errors in the form.')
-    return render_template('forms/edit_artist.html', form=form, artist=artist)
+    return render_template('forms/new_artist.html', form=form)
   
   try:
-    artist.name=form.name.data
-    artist.city=form.city.data
-    artist.state=form.state.data
-    artist.phone=form.phone.data
-    artist.genres=",".join(form.genres.data)
-    artist.image_link=form.image_link.data
-    artist.facebook_link=form.facebook_link.data
-    artist.website=form.website_link.data
-    artist.seeking_venue=form.seeking_venue.data
-    artist.seeking_description=form.seeking_description.data  
+    artist.name=request.form['name']
+    artist.city=request.form['city']
+    artist.state=request.form['state']
+    artist.phone=request.form['phone']
+    artist.genres=",".join(request.form.getlist('genres'))
+    artist.image_link=request.form['image_link']
+    artist.facebook_link=request.form['facebook_link']
+    artist.website=request.form['website_link']
+    artist.seeking_venue=bool(request.form.get('seeking_venue'))
+    artist.seeking_description=request.form.get('seeking_description')
     
     db.session.commit()  
-    flash(f"Artist {form.name.data} was successfully updated!")
-  except Exception as e:
+    flash(f"Artist {request.form.get('name')} was successfully updated!")
+  except:
     db.session.rollback()
-    print(e)
-    flash(f"Error occurred. Artist {form.name.data} could not be listed.")
+    error=True
+    flash(f"Error occurred. Artist {request.form.get('name')} could not be updated.")
     
   finally:
     db.session.close()
@@ -385,7 +383,6 @@ def edit_venue(venue_id):
   venue = Venue.query.get_or_404(venue_id)
   form = VenueForm(obj=venue)
   form.genres.data = venue.genres.split(',') if venue.genres else []
-  form.website_link.data = venue.website
   # TODO: populate form with values from venue with ID <venue_id>
   return render_template('forms/edit_venue.html', form=form, venue=venue)
 
@@ -511,21 +508,15 @@ def create_shows():
 def create_show_submission():
   # called to create new shows in the db, upon submitting new show listing form
   # TODO: insert form data as a new Show record in the db, instead
-  form = ShowForm(request.form)
-  
-  if not form.validate_on_submit():
-    flash('Please fix the errors in the form.')
-    return render_template('forms/new_show.html', form=form)
-  
-  
   try:
-    artist_id = form.get('artist_id','').strip() if form.artist_id.data else ''
-    venue_id = form.get('venue_id','').strip() if form.venue_id.data else ''
+    artist_id = request.form.get('artist_id','').strip()
+    venue_id = request.form.get('venue_id','').strip()
+    start_time=request.form.get('start_time', '').strip()
     
     show = Show(
       artist_id = int(artist_id),
       venue_id = int(venue_id),
-      start_time = form.start_time.data
+      start_time=datetime.strptime(request.form.get('start_time'), '%Y-%m-%d %H:%M:%S')
     )
     db.session.add(show)
     db.session.commit()

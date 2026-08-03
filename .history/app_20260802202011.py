@@ -519,13 +519,14 @@ def create_show_submission():
   
   
   try:
-    artist_id = form.get('artist_id','').strip() if form.artist_id.data else ''
-    venue_id = form.get('venue_id','').strip() if form.venue_id.data else ''
+    artist_id = request.form.get('artist_id','').strip()
+    venue_id = request.form.get('venue_id','').strip()
+    start_time=request.form.get('start_time', '').strip()
     
     show = Show(
       artist_id = int(artist_id),
       venue_id = int(venue_id),
-      start_time = form.start_time.data
+      start_time=datetime.strptime(request.form.get('start_time'), '%Y-%m-%d %H:%M:%S')
     )
     db.session.add(show)
     db.session.commit()

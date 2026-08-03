@@ -352,10 +352,9 @@ def edit_artist_submission(artist_id):
   # artist record with ID <artist_id> using the new attributes
   artist = Artist.query.get_or_404(artist_id)
   form = ArtistForm(request.form)
-  
   if not form.validate_on_submit():
     flash('Please fix the errors in the form.')
-    return render_template('forms/edit_artist.html', form=form, artist=artist)
+    return render_template('forms/new_artist.html', form=form, artist=artist)
   
   try:
     artist.name=form.name.data
@@ -385,8 +384,8 @@ def edit_venue(venue_id):
   venue = Venue.query.get_or_404(venue_id)
   form = VenueForm(obj=venue)
   form.genres.data = venue.genres.split(',') if venue.genres else []
-  form.website_link.data = venue.website
   # TODO: populate form with values from venue with ID <venue_id>
+  form.website_link.data = venue.website
   return render_template('forms/edit_venue.html', form=form, venue=venue)
 
 @app.route('/venues/<int:venue_id>/edit', methods=['POST'])
@@ -511,21 +510,15 @@ def create_shows():
 def create_show_submission():
   # called to create new shows in the db, upon submitting new show listing form
   # TODO: insert form data as a new Show record in the db, instead
-  form = ShowForm(request.form)
-  
-  if not form.validate_on_submit():
-    flash('Please fix the errors in the form.')
-    return render_template('forms/new_show.html', form=form)
-  
-  
   try:
-    artist_id = form.get('artist_id','').strip() if form.artist_id.data else ''
-    venue_id = form.get('venue_id','').strip() if form.venue_id.data else ''
+    artist_id = request.form.get('artist_id','').strip()
+    venue_id = request.form.get('venue_id','').strip()
+    start_time=request.form.get('start_time', '').strip()
     
     show = Show(
       artist_id = int(artist_id),
       venue_id = int(venue_id),
-      start_time = form.start_time.data
+      start_time=datetime.strptime(request.form.get('start_time'), '%Y-%m-%d %H:%M:%S')
     )
     db.session.add(show)
     db.session.commit()
