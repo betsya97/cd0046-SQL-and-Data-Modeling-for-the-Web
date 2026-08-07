@@ -10,6 +10,4 @@ DEBUG = True
 
 
 # TODO IMPLEMENT DATABASE URL
-SQLALCHEMY_DATABASE_URI = 'postgresql://aaguilar:@localhost:5432/FyyurApp'
-SQLALCHEMY_TRACK_MODIFICATIONS = False
-SECRET_KEY = 'dev'
+SQLALCHEMY_DATABASE_URI = '<Put your local database url>'
